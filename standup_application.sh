@@ -3,8 +3,6 @@
 echo "Standing up fileuploader application"
 docker run -d \
     -e "SPRING_PROFILES_ACTIVE=prod" \
-    -e "DASHBOARD_USERNAME=admin" \
-    -e "DASHBOARD_PASSWORD=lcag" \
 	-e "VIRTUAL_PORT=8383" \
 	-e "SERVER_PORT=8383" \
 	--name fileuploader \
