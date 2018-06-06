@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https:////cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="/css/lcag.css">
     <script src="/js/lcag-common.js"></script>
 </head>
@@ -23,40 +24,117 @@
                         <img alt="Brand" src="/images/lcag_logo.jpg" width="60">
                     </a>
                 </div>
-                <div class="collapse navbar-collapse">
-                    <p class="navbar-text">
-                        <span id="totalContributions" class="label label-default">Total £0</span>
-                        <span id="totalContributors" class="label label-primary">0 Contributors</span>
-                        <span id="numberOfRegisteredMembers" class="label label-success">0 Members</span>
-                        <span id="numberOfGuests" class="label label-info">0 Guests</span>
-                        <span id="totalUsers" class="label label-danger">0 Total</span>
-                    </p>
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <form action="/paymentUpload" class="dropzone" id="dropzone-form">
-                                <p class="dz-message">Drop bank export txt file here</p>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">Secure Upload<div class="pull-right"></siv><i class="fa fa-lock" aria-hidden="true"></i></div></div>
+
+                        <div class="panel-body">
+                            <form id="inputFieldForm" class="">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">@</div>
+                                        <input type="email" class="form-control" id="emailAddress" placeholder="Please enter your email address" required />
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form action="/paymentUpload" class="dropzone" id="dropzone-form">
+                            </form>
+                        </div>
+
+                        <div class="panel-footer clearfix">
+                            <div class="pull-right">
+                                <button class="btn btn-primary" id="uploadButton">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
         <script type="text/javascript">
             Dropzone.autoDiscover = false;
+
+            function isValidEmailAddress(emailAddress) {
+                var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                return pattern.test($.trim(emailAddress));
+            }
+
             $(function () {
-                lcag.MemberGrid.initialise();
-                lcag.PaymentsGrid.initialise();
                 $("#dropzone-form").dropzone({
                     maxFiles: 2000,
-                    url: "/paymentUpload",
-                    success: function (file, response) {
-                        lcag.Common.alertSuccess();
-                        lcag.PaymentsGrid.grid.trigger("reloadGrid");
-                        lcag.MemberGrid.grid.trigger("reloadGrid");
+                    url: "/fileUpload",
+                    autoProcessQueue: false,
+                    init: function() {
+                        var dropzoneForm = this;
+
+                        this.on('sending', function(file, xhr, formData) {
+                            var data = $('#inputFieldForm').serializeArray();
+                            $.each(data, function(key, el) {
+                                formData.append(el.name, el.value);
+                            });
+                        });
+
+                        $("#uploadButton").click(function (e) {
+                            e.preventDefault();
+                            dropzoneForm.processQueue();
+                        });
+                    },
+                    success: function (file, response) {}
+                });
+
+                $("#inputFieldForm").validate({
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                        // Add the `help-block` class to the error element
+                        error.addClass( "help-block" );
+
+                        // Add `has-feedback` class to the parent div.form-group
+                        // in order to add icons to inputs
+                        element.parents( ".col-sm-5" ).addClass( "has-feedback" );
+
+                        error.insertAfter( element.parent() );
+
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if ( !element.next( "span" )[ 0 ] ) {
+                            $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+                        }
+                    },
+                    success: function ( label, element ) {
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if ( !$( element ).next( "span" )[ 0 ] ) {
+                            $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+                        $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+                    },
+                    unhighlight: function ( element, errorClass, validClass ) {
+                        $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+                        $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
                     }
                 });
+/*
+                $("#emailAddress").on("change", function() {
+                    $(this).removeClass("invalid");
+                }).on("blur", function() {
+                    $(this).toggleClass("invalid", !isValidEmailAddress(this.value));
+                });
+*/
             });
+
+
         </script>
     </body>
 </html>
