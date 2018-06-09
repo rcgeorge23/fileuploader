@@ -32,25 +32,82 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
 
-                        <div class="panel-heading">Secure Upload<div class="pull-right"></siv><i class="fa fa-lock" aria-hidden="true"></i></div></div>
+                        <div class="panel-heading">Secure Upload<div class="pull-right"><i class="fa fa-lock" aria-hidden="true"></i></div></div>
 
                         <div class="panel-body">
-                            <form id="inputFieldForm" class="">
+                            <form id="inputFieldForm">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">T</div>
+                                        <input type="text" class="form-control" id="name" placeholder="Please enter your name" required />
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon">@</div>
                                         <input type="email" class="form-control" id="emailAddress" placeholder="Please enter your email address" required />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">T</div>
+                                        <input type="text" class="form-control" id="mpName" placeholder="Please enter the name of your MP" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">T</div>
+                                        <input type="text" class="form-control" id="mpParty" placeholder="Please enter your MP party" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">T</div>
+                                        <input type="text" class="form-control" id="mpConstituency" placeholder="Please enter your MP constituency" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input name="mpEngaged" type="checkbox"> Have you engaged your MP?
+                                            </label>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="mpSympathetic" type="checkbox"> Is your MP sympathetic?
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">T</div>
+                                        <input type="text" class="form-control" id="schemes" placeholder="Please enter the name of the scheme(s) you were involved with" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">T</div>
+                                        <input type="text" class="form-control" id="industry" placeholder="Please enter the industry that you work / worked in" required />
+                                    </div>
+                                </div>
                             </form>
-
-                            <form action="/paymentUpload" class="dropzone" id="dropzone-form">
-                            </form>
+                            <div class="form-group">
+                                <label for="identification">Please provide proof of ID (passport or driving license)</label>
+                                <input type="file" class="form-control" id="identification" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="identification">Please provide proof of HMRC enquiry or involvement in a scheme (HMRC enquiry / discovery assessment / APN, loan agreement with your name visible etc.)</label>
+                                <input type="file" class="form-control" id="identification" required />
+                            </div>
                         </div>
 
                         <div class="panel-footer clearfix">
                             <div class="pull-right">
-                                <button class="btn btn-primary" id="uploadButton">Upload</button>
+                                <button class="btn btn-primary" id="uploadButton">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -64,11 +121,6 @@
 
         <script type="text/javascript">
             Dropzone.autoDiscover = false;
-
-            function isValidEmailAddress(emailAddress) {
-                var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-                return pattern.test($.trim(emailAddress));
-            }
 
             $(function () {
                 $("#dropzone-form").dropzone({
@@ -103,6 +155,8 @@
                         // in order to add icons to inputs
                         element.parents( ".col-sm-5" ).addClass( "has-feedback" );
 
+                       console.log("element.attr('id')", element.attr('id'));
+
                         error.insertAfter( element.parent() );
 
                         // Add the span element, if doesn't exists, and apply the icon classes to it.
@@ -125,13 +179,7 @@
                         $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
                     }
                 });
-/*
-                $("#emailAddress").on("change", function() {
-                    $(this).removeClass("invalid");
-                }).on("blur", function() {
-                    $(this).toggleClass("invalid", !isValidEmailAddress(this.value));
-                });
-*/
+
             });
 
 
