@@ -33,14 +33,14 @@ public class HomeController {
     private MemberService memberService;
 
     @GetMapping("/")
-    public ModelAndView get(@RequestParam(value = "token", required = false) String token) {
+    public String get(@RequestParam(value = "token", required = false) String token) {
         Member member = memberService.findMemberByToken(token);
 
         if (member == null) {
-            return new ModelAndView("notFound");
+            return "notFound";
         }
 
-        return new ModelAndView("home", new HashMap<String, Member>() {{ put("member", member); }});
+        return "home";
     }
 
     @CrossOrigin

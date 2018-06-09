@@ -116,12 +116,23 @@
             </div>
         </div>
 
-
-
-
-
         <script type="text/javascript">
             $(function () {
+                var locationAsString = new String(document.location);
+                var tokenArgument = locationAsString.substring(locationAsString.indexOf("token="));
+                jQuery.ajax({
+                        url: '/member?' + tokenArgument,
+                        method: "GET",
+                        dataType: "json",
+                        complete: function(response, status) {
+                            if (status == "success") {
+                                var member = response.responseJSON;
+                                $('#name').val(member.name);
+                                $('#emailAddress').val(member.emailAddress);
+                            }
+                        }
+                    });
+
                 $("#inputFieldForm").validate({
                     errorElement: "em",
                     errorPlacement: function ( error, element ) {
