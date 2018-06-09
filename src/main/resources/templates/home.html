@@ -30,12 +30,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-default">
+                    <form id="inputFieldForm">
+                        <div class="panel panel-default">
 
-                        <div class="panel-heading">Secure Upload<div class="pull-right"><i class="fa fa-lock" aria-hidden="true"></i></div></div>
+                            <div class="panel-heading">Secure Upload<div class="pull-right"><i class="fa fa-lock" aria-hidden="true"></i></div></div>
 
-                        <div class="panel-body">
-                            <form id="inputFieldForm">
+                            <div class="panel-body">
+
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon">T</div>
@@ -94,23 +95,23 @@
                                         <input type="text" class="form-control" id="industry" placeholder="Please enter the industry that you work / worked in" required />
                                     </div>
                                 </div>
-                            </form>
-                            <div class="form-group">
-                                <label for="identification">Please provide proof of ID (passport or driving license)</label>
-                                <input type="file" class="form-control" id="identification" required />
+                                <div class="form-group">
+                                    <label for="identification">Please provide proof of ID (passport or driving license)</label>
+                                    <input type="file" class="form-control" id="identification" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="identification">Please provide proof of HMRC enquiry or involvement in a scheme (HMRC enquiry / discovery assessment / APN, loan agreement with your name visible etc.)</label>
+                                    <input type="file" class="form-control" id="identification" required />
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="identification">Please provide proof of HMRC enquiry or involvement in a scheme (HMRC enquiry / discovery assessment / APN, loan agreement with your name visible etc.)</label>
-                                <input type="file" class="form-control" id="identification" required />
-                            </div>
-                        </div>
 
-                        <div class="panel-footer clearfix">
-                            <div class="pull-right">
-                                <button class="btn btn-primary" id="uploadButton">Submit</button>
+                            <div class="panel-footer clearfix">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary" id="uploadButton">Submit</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -120,31 +121,7 @@
 
 
         <script type="text/javascript">
-            Dropzone.autoDiscover = false;
-
             $(function () {
-                $("#dropzone-form").dropzone({
-                    maxFiles: 2000,
-                    url: "/fileUpload",
-                    autoProcessQueue: false,
-                    init: function() {
-                        var dropzoneForm = this;
-
-                        this.on('sending', function(file, xhr, formData) {
-                            var data = $('#inputFieldForm').serializeArray();
-                            $.each(data, function(key, el) {
-                                formData.append(el.name, el.value);
-                            });
-                        });
-
-                        $("#uploadButton").click(function (e) {
-                            e.preventDefault();
-                            dropzoneForm.processQueue();
-                        });
-                    },
-                    success: function (file, response) {}
-                });
-
                 $("#inputFieldForm").validate({
                     errorElement: "em",
                     errorPlacement: function ( error, element ) {
@@ -154,8 +131,6 @@
                         // Add `has-feedback` class to the parent div.form-group
                         // in order to add icons to inputs
                         element.parents( ".col-sm-5" ).addClass( "has-feedback" );
-
-                       console.log("element.attr('id')", element.attr('id'));
 
                         error.insertAfter( element.parent() );
 
