@@ -36,7 +36,9 @@ public class MemberService {
                 "u.mp_constituency = ?, " +
                 "u.mp_party = ?, " +
                 "u.schemes = ?, " +
-                "u.industry = ? " +
+                "u.industry = ?, " +
+                "u.name = ?, " +
+                "u.email = ? " +
                 "where u.token = ?";
 
         LOGGER.info("Created sql: {}", sql);
@@ -50,6 +52,8 @@ public class MemberService {
                 member.getMpParty(),
                 member.getSchemes(),
                 member.getIndustry(),
+                member.getName(),
+                member.getEmailAddress(),
                 member.getToken()
         );
 

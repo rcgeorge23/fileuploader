@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import uk.co.novinet.service.Member;
 import uk.co.novinet.service.MemberService;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.HashMap;
 
 @Controller
 public class HomeController {
@@ -45,10 +43,13 @@ public class HomeController {
 
     @CrossOrigin
     @PostMapping(path = "/submit")
-    public ResponseEntity submit(@RequestParam("file") MultipartFile file, Member member) {
+    public ResponseEntity submit(
+            @RequestParam("identification") MultipartFile identification,
+            @RequestParam("proofOfSchemeInvolvement") MultipartFile proofOfSchemeInvolvement,
+            Member member) {
         try {
             memberService.update(member);
-            IOUtils.write(file.getBytes(), new FileOutputStream(new File("/tmp/newFile.txt")));
+//            IOUtils.write(file.getBytes(), new FileOutputStream(new File("/tmp/newFile.txt")));
             return new ResponseEntity( HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,6 +1,6 @@
 package uk.co.novinet.service;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 
 public class Member {
     private Long id;
@@ -9,8 +9,8 @@ public class Member {
     private String emailAddress;
     private String mpName;
     private String schemes;
-    private Boolean mpEngaged;
-    private Boolean mpSympathetic;
+    private Boolean mpEngaged = false;
+    private Boolean mpSympathetic = false;
     private String mpConstituency;
     private String mpParty;
     private String industry;
@@ -143,6 +143,6 @@ public class Member {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return reflectionToString(this);
     }
 }
