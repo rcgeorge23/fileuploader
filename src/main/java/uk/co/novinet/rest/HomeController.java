@@ -1,6 +1,5 @@
 package uk.co.novinet.rest;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import uk.co.novinet.service.Member;
 import uk.co.novinet.service.MemberService;
-
-import java.io.File;
-import java.io.FileOutputStream;
+import uk.co.novinet.service.SftpService;
 
 @Controller
 public class HomeController {
@@ -29,6 +26,9 @@ public class HomeController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private SftpService sftpService;
 
     @GetMapping("/")
     public String get(@RequestParam(value = "token", required = false) String token) {
@@ -43,17 +43,27 @@ public class HomeController {
 
     @CrossOrigin
     @PostMapping(path = "/submit")
-    public ResponseEntity submit(
+    public String submit(
             @RequestParam("identification") MultipartFile identification,
             @RequestParam("proofOfSchemeInvolvement") MultipartFile proofOfSchemeInvolvement,
             Member member) {
         try {
             memberService.update(member);
-//            IOUtils.write(file.getBytes(), new FileOutputStream(new File("/tmp/newFile.txt")));
-            return new ResponseEntity( HttpStatus.OK);
+            Long currentTimeMillis = System.currentTimeMillis();
+            String sanitisedEmailAddress = sanitise(member.getEmailAddress());
+            String destinationPath = "/" + sanitisedEmailAddress + "/" + currentTimeMillis;
+
+            sftpService.sendToSftpEndpoint(identification.getInputStream(), destinationPath, identification.getOriginalFilename());
+            sftpService.sendToSftpEndpoint(proofOfSchemeInvolvement.getInputStream(), destinationPath, proofOfSchemeInvolvement.getOriginalFilename());
+            return "thankYou";
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            LOGGER.error("Unable to receive files and update member {}", member, e);
+            return "error";
         }
+    }
+
+    private String sanitise(String toSanitise) {
+        return toSanitise.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
     }
 
 }

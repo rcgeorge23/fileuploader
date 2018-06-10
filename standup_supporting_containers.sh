@@ -27,6 +27,7 @@ echo "standing up sftp server"
 docker run -d \
     --name lcag-sftp \
     --network lcag-automation-network \
+    -v /tmp:/home/user/share \
     -p 2222:22 \
     atmoz/sftp \
-    user:password:::upload
+    user:password:::share
