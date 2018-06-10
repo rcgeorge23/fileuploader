@@ -39,6 +39,7 @@ public class MemberService {
                 "u.industry = ?, " +
                 "u.name = ?, " +
                 "u.email = ? " +
+                "u.has_completed_membership_form = ? " +
                 "where u.token = ?";
 
         LOGGER.info("Created sql: {}", sql);
@@ -54,6 +55,7 @@ public class MemberService {
                 member.getIndustry(),
                 member.getName(),
                 member.getEmailAddress(),
+                true,
                 member.getToken()
         );
 
