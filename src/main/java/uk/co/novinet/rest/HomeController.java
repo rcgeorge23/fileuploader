@@ -4,14 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import uk.co.novinet.service.MailSenderService;
 import uk.co.novinet.service.Member;
 import uk.co.novinet.service.MemberService;
 import uk.co.novinet.service.SftpService;
@@ -21,11 +20,11 @@ public class HomeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
-    @Value("${document.upload.destination.directory}")
-    private String documentUploadDestinationDirectory;
-
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private MailSenderService mailSenderService;
 
     @Autowired
     private SftpService sftpService;
@@ -36,6 +35,10 @@ public class HomeController {
 
         if (member == null) {
             return "notFound";
+        }
+
+        if (member.hasCompletedMembershipForm()) {
+            return "thankYou";
         }
 
         return "home";
@@ -55,6 +58,8 @@ public class HomeController {
 
             sftpService.sendToSftpEndpoint(identification.getInputStream(), destinationPath, identification.getOriginalFilename());
             sftpService.sendToSftpEndpoint(proofOfSchemeInvolvement.getInputStream(), destinationPath, proofOfSchemeInvolvement.getOriginalFilename());
+
+            mailSenderService.sendFollowUpEmail(member);
             return "thankYou";
         } catch (Exception e) {
             LOGGER.error("Unable to receive files and update member {}", member, e);

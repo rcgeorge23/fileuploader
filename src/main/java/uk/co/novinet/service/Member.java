@@ -15,6 +15,7 @@ public class Member {
     private String mpParty;
     private String industry;
     private String token;
+    private Boolean completedMembershipForm;
 
     public Member() {
     }
@@ -30,7 +31,7 @@ public class Member {
             Boolean mpSympathetic,
             String mpConstituency,
             String mpParty,
-            String industry, String token) {
+            String industry, String token, Boolean completedMembershipForm) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -43,6 +44,7 @@ public class Member {
         this.mpParty = mpParty;
         this.industry = industry;
         this.token = token;
+        this.completedMembershipForm = completedMembershipForm;
     }
 
     public String getEmailAddress() {
@@ -144,5 +146,13 @@ public class Member {
     @Override
     public String toString() {
         return reflectionToString(this);
+    }
+
+    public Boolean hasCompletedMembershipForm() {
+        return completedMembershipForm;
+    }
+
+    public void setCompletedMembershipForm(Boolean completedMembershipForm) {
+        this.completedMembershipForm = completedMembershipForm;
     }
 }

@@ -55,10 +55,14 @@ public class TestUtils {
 
         while (needToRetry && sqlRetryCounter < 60) {
             try {
+                runSqlScript("sql/drop_user_table.sql");
                 runSqlScript("sql/create_user_table.sql");
                 runSqlScript("sql/create_usergroups_table.sql");
-                runSqlScript("sql/create_bank_transaction_table.sql");
                 runSqlScript("sql/populate_usergroups_table.sql");
+
+                for (int i = 1; i <= 200; i++) {
+                    insertUser(i, "testuser" + i, "user" + i + "@something.com", "Test Name" + i, 8, "1234_" + i);
+                }
 
                 needToRetry = false;
             } catch (Exception e) {

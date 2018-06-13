@@ -38,7 +38,7 @@ public class MemberService {
                 "u.schemes = ?, " +
                 "u.industry = ?, " +
                 "u.name = ?, " +
-                "u.email = ? " +
+                "u.email = ?, " +
                 "u.has_completed_membership_form = ? " +
                 "where u.token = ?";
 
@@ -94,7 +94,9 @@ public class MemberService {
                 rs.getString("mp_constituency"),
                 rs.getString("mp_party"),
                 rs.getString("industry"),
-                rs.getString("token"));
+                rs.getString("token"),
+                rs.getBoolean("has_completed_membership_form")
+        );
     }
 
 }
