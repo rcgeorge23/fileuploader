@@ -60,26 +60,26 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
-                                        <input type="text" name="mpParty" class="form-control" id="mpParty" placeholder="Please enter your MP party" required />
+                                        <input type="text" name="mpConstituency" class="form-control" id="mpConstituency" placeholder="Please enter your MP constituency" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
-                                        <input type="text" name="mpConstituency" class="form-control" id="mpConstituency" placeholder="Please enter your MP constituency" required />
+                                        <input type="text" name="mpParty" class="form-control" id="mpParty" placeholder="Please enter your MP party" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input name="mpEngaged" type="checkbox"> Have you engaged your MP?
+                                                <input id="mpEngaged" name="mpEngaged" type="checkbox"> Have you engaged your MP?
                                             </label>
                                         </div>
                                         <div class="input-group">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input name="mpSympathetic" type="checkbox"> Is your MP sympathetic?
+                                                    <input id="mpSympathetic" name="mpSympathetic" type="checkbox"> Is your MP sympathetic?
                                                 </label>
                                             </div>
                                         </div>
@@ -95,6 +95,12 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="industry" class="form-control" id="industry" placeholder="Please enter the industry that you work / worked in" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
+                                        <input type="text" name="howDidYouHearAboutLcag" class="form-control" id="howDidYouHearAboutLcag" placeholder="Please tell us how you found out about LCAG" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -139,6 +145,14 @@
                             var member = response.responseJSON;
                             $('#name').val(member.name);
                             $('#emailAddress').val(member.emailAddress);
+                            $('#mpName').val(member.mpName);
+                            $('#mpConstituency').val(member.mpConstituency);
+                            $('#mpParty').val(member.mpParty);
+                            $('#mpEngaged').prop("checked", member.mpEngaged == true ? "checked" : "");
+                            $('#mpSympathetic').prop("checked", member.mpSympathetic == true ? "checked" : "");
+                            $('#schemes').val(member.schemes);
+                            $('#industry').val(member.industry);
+                            $('#howDidYouHearAboutLcag').val(member.howDidYouHearAboutLcag);
                         }
                     }
                 });

@@ -39,7 +39,8 @@ public class MemberService {
                 "u.industry = ?, " +
                 "u.name = ?, " +
                 "u.email = ?, " +
-                "u.has_completed_membership_form = ? " +
+                "u.has_completed_membership_form = ?, " +
+                "u.how_did_you_hear_about_lcag = ? " +
                 "where u.token = ?";
 
         LOGGER.info("Created sql: {}", sql);
@@ -56,6 +57,7 @@ public class MemberService {
                 member.getName(),
                 member.getEmailAddress(),
                 true,
+                member.getHowDidYouHearAboutLcag(),
                 member.getToken()
         );
 
@@ -95,7 +97,8 @@ public class MemberService {
                 rs.getString("mp_party"),
                 rs.getString("industry"),
                 rs.getString("token"),
-                rs.getBoolean("has_completed_membership_form")
+                rs.getBoolean("has_completed_membership_form"),
+                rs.getString("how_did_you_hear_about_lcag")
         );
     }
 

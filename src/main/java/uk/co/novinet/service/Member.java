@@ -16,6 +16,7 @@ public class Member {
     private String industry;
     private String token;
     private Boolean completedMembershipForm;
+    private String howDidYouHearAboutLcag;
 
     public Member() {
     }
@@ -31,7 +32,10 @@ public class Member {
             Boolean mpSympathetic,
             String mpConstituency,
             String mpParty,
-            String industry, String token, Boolean completedMembershipForm) {
+            String industry,
+            String token,
+            Boolean completedMembershipForm,
+            String howDidYouHearAboutLcag) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -45,6 +49,7 @@ public class Member {
         this.industry = industry;
         this.token = token;
         this.completedMembershipForm = completedMembershipForm;
+        this.howDidYouHearAboutLcag = howDidYouHearAboutLcag;
     }
 
     public String getEmailAddress() {
@@ -154,5 +159,13 @@ public class Member {
 
     public void setCompletedMembershipForm(Boolean completedMembershipForm) {
         this.completedMembershipForm = completedMembershipForm;
+    }
+
+    public String getHowDidYouHearAboutLcag() {
+        return howDidYouHearAboutLcag;
+    }
+
+    public void setHowDidYouHearAboutLcag(String howDidYouHearAboutLcag) {
+        this.howDidYouHearAboutLcag = howDidYouHearAboutLcag;
     }
 }
