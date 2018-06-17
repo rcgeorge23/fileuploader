@@ -31,10 +31,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p>Dear <span id="salutation">Potential LCAG Member</span>,</p>
-                    <p>Welcome to the Loan Charge Action Group secure membership form. We need to collect a few details from you in order to process
-                    your application. Please provide the information requested below and we will get back to you as soon as we can.</p>
-                    <p>Many thanks,<br/>LCAG Membership Team</p>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>Dear <span id="salutation">Potential LCAG Member</span>,</p>
+                            <p>Welcome to the Loan Charge Action Group secure membership form. We need to collect a few details from you in order to process
+                            your application. Please provide the information requested below and we will get back to you as soon as we can.</p>
+                            <p>Many thanks,<br/>LCAG Membership Team</p>
+                        </div>
+                    </div>
                     <form id="inputFieldForm" action="/submit" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="token" value="" id="token" />
                         <div class="panel panel-default">
@@ -44,35 +48,35 @@
                             <div class="panel-body">
 
                                 <div class="form-group">
-                                    <label for="name">Please enter your name</label>
+                                    <label for="name">Name</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="name" class="form-control" id="name" placeholder="Please enter your name" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="emailAddress">Please enter your email address</label>
+                                    <label for="emailAddress">Email address</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-at" aria-hidden="true"></i></div>
                                         <input type="email" name="emailAddress" class="form-control" id="emailAddress" placeholder="Please enter your email address" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mpName">Please enter the name of your MP</label>
+                                    <label for="mpName">MP Name</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="mpName" class="form-control" id="mpName" placeholder="Please enter the name of your MP" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mpConstituency">Please enter your MP constituency</label>
+                                    <label for="mpConstituency">MP constituency</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="mpConstituency" class="form-control" id="mpConstituency" placeholder="Please enter your MP constituency" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mpParty">Please enter your MP party</label>
+                                    <label for="mpParty">MP party</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="mpParty" class="form-control" id="mpParty" placeholder="Please enter your MP party" required />
@@ -95,33 +99,59 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="schemes">Please enter the name of the scheme(s) you were involved with</label>
+                                    <label for="schemes">Name of the scheme(s) you were involved with</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="schemes" class="form-control" id="schemes" placeholder="Please enter the name of the scheme(s) you were involved with" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="industry">Please enter the industry that you work / worked in</label>
+                                    <label for="industry">Industry that you work / worked in</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="industry" class="form-control" id="industry" placeholder="Please enter the industry that you work / worked in" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="howDidYouHearAboutLcag">Please tell us how you found out about LCAG</label>
+                                    <label for="howDidYouHearAboutLcag">How did you find out about LCAG?</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
                                         <input type="text" name="howDidYouHearAboutLcag" class="form-control" id="howDidYouHearAboutLcag" placeholder="Please tell us how you found out about LCAG" required />
                                     </div>
                                 </div>
+                                <hr/>
                                 <div class="form-group">
-                                    <label for="identification">Please provide proof of ID (passport or driving license)</label>
-                                    <input type="file" name="identification" class="form-control" id="identification" required />
+                                    <label>Are you a member of Big Group?</label>
+                                    <div>
+                                        <label class="radio-inline"> <input type="radio" name="memberOfBigGroup" id="memberOfBigGroupYes" value="true" required> Yes </label>
+                                        <label class="radio-inline"> <input type="radio" name="memberOfBigGroup" id="memberOfBigGroupNo" value="false" required> No </label>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="identification">Please provide proof of HMRC enquiry or involvement in a scheme (HMRC enquiry / discovery assessment / APN, loan agreement with your name visible etc.)</label>
-                                    <input type="file" name="proofOfSchemeInvolvement" class="form-control" id="proofOfSchemeInvolvement" required />
+                                <div id="bigGroupUsernameSection" style="display: none;">
+                                    <label for="bigGroupUsername">Big Group username</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-align-justify" aria-hidden="true"></i></div>
+                                        <input type="text" name="bigGroupUsername" class="form-control" id="bigGroupUsername" placeholder="Please tell us your Big Group username" required />
+                                    </div>
+                                </div>
+                                <div id="idDocumentationSection" style="display: none;">
+                                    <p>If you are not a member of Big Group you must provide proof of ID and sheme involvement.</p>
+                                    <p>Proof of ID should be either a scan of your passport or driving license.</p>
+                                    <p>Proof of scheme involvement should be one of:</p>
+                                        <ul>
+                                            <li>HMRC enquiry letter</li>
+                                            <li>Discovery Assessment letter</li>
+                                            <li>APN letter</li>
+                                            <li>Scheme contract OR loan agreement with your name visible</li>
+                                        </ul>
+                                    <div class="form-group">
+                                        <label for="identification">Proof of ID (passport or driving license)</label>
+                                        <input type="file" name="identification" class="form-control" id="identification" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="identification">Proof of HMRC enquiry or involvement in a scheme</label>
+                                        <input type="file" name="proofOfSchemeInvolvement" class="form-control" id="proofOfSchemeInvolvement" required />
+                                    </div>
                                 </div>
                             </div>
 
@@ -148,6 +178,16 @@
             }
 
             $(function () {
+                $("input[type=radio][name=memberOfBigGroup]").change(function() {
+                    if (this.value == 'true') {
+                        $("#bigGroupUsernameSection").show();
+                        $("#idDocumentationSection").hide();
+                    } else {
+                        $("#bigGroupUsernameSection").hide();
+                        $("#idDocumentationSection").show();
+                    }
+                });
+
                 $.ajax({
                     url: '/member?token=' + getParameterByName('token'),
                     method: "GET",
@@ -177,26 +217,51 @@
                     errorPlacement: function ( error, element ) {
                         error.addClass( "help-block" );
                         element.parents( ".form-group" ).addClass( "has-feedback" );
-                        error.insertAfter( element.parent() );
+                        console.log("element", element);
+
+                        if ($(element).attr('id') == 'memberOfBigGroupYes') {
+                            error.insertAfter( $(element).parent().parent() );
+                        } else {
+                            error.insertAfter( $(element).parent() );
+                        }
+
                         if ( !element.next( "span" )[ 0 ] ) {
-                            $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+                            if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                                $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( $(element).parent().parent() );
+                            } else {
+                                $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( $(element) );
+                            }
                         }
                     },
                     success: function ( label, element ) {
-                        if ( !$( element ).next( "span" )[ 0 ] ) {
-                            $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+                        if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                            if ( !$( element ).parent().parent().next( "span" )[ 0 ] ) {
+                                $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $(element).parent().parent() );
+                            }
+                        } else {
+                            if ( !$( element ).next( "span" )[ 0 ] ) {
+                                $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $(element) );
+                            }
                         }
                     },
                     highlight: function ( element, errorClass, validClass ) {
                         $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
-                        $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+                        if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                            $( element ).parent().parent().next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+                        } else {
+                            $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+                        }
                     },
                     unhighlight: function ( element, errorClass, validClass ) {
                         $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-error" );
-                        $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+                        if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                            console.log("element", $(element));
+                            $( element ).parent().parent().next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+                        } else {
+                            $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+                        }
                     }
                 });
-
             });
 
 

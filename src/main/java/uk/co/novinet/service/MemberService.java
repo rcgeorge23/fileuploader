@@ -98,8 +98,9 @@ public class MemberService {
                 rs.getString("industry"),
                 rs.getString("token"),
                 rs.getBoolean("has_completed_membership_form"),
-                rs.getString("how_did_you_hear_about_lcag")
-        );
+                rs.getBoolean("member_of_big_group"),
+                rs.getString("how_did_you_hear_about_lcag"),
+                rs.getString("big_group_username"));
     }
 
 }

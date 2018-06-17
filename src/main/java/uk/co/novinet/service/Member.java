@@ -16,7 +16,9 @@ public class Member {
     private String industry;
     private String token;
     private Boolean completedMembershipForm;
+    private Boolean memberOfBigGroup;
     private String howDidYouHearAboutLcag;
+    private String bigGroupUsername;
 
     public Member() {
     }
@@ -35,7 +37,8 @@ public class Member {
             String industry,
             String token,
             Boolean completedMembershipForm,
-            String howDidYouHearAboutLcag) {
+            Boolean memberOfBigGroup,
+            String howDidYouHearAboutLcag, String bigGroupUsername) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -49,7 +52,9 @@ public class Member {
         this.industry = industry;
         this.token = token;
         this.completedMembershipForm = completedMembershipForm;
+        this.memberOfBigGroup = memberOfBigGroup;
         this.howDidYouHearAboutLcag = howDidYouHearAboutLcag;
+        this.bigGroupUsername = bigGroupUsername;
     }
 
     public String getEmailAddress() {
@@ -167,5 +172,21 @@ public class Member {
 
     public void setHowDidYouHearAboutLcag(String howDidYouHearAboutLcag) {
         this.howDidYouHearAboutLcag = howDidYouHearAboutLcag;
+    }
+
+    public Boolean getMemberOfBigGroup() {
+        return memberOfBigGroup;
+    }
+
+    public void setMemberOfBigGroup(Boolean memberOfBigGroup) {
+        this.memberOfBigGroup = memberOfBigGroup;
+    }
+
+    public String getBigGroupUsername() {
+        return bigGroupUsername;
+    }
+
+    public void setBigGroupUsername(String bigGroupUsername) {
+        this.bigGroupUsername = bigGroupUsername;
     }
 }

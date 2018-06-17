@@ -1,5 +1,6 @@
 package uk.co.novinet.rest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import uk.co.novinet.service.MailSenderService;
 import uk.co.novinet.service.Member;
 import uk.co.novinet.service.MemberService;
 import uk.co.novinet.service.SftpService;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Controller
 public class HomeController {
@@ -56,8 +59,13 @@ public class HomeController {
             String sanitisedEmailAddress = sanitise(member.getEmailAddress());
             String destinationPath = "/" + sanitisedEmailAddress + "/" + currentTimeMillis;
 
-            sftpService.sendToSftpEndpoint(identification.getInputStream(), destinationPath, identification.getOriginalFilename());
-            sftpService.sendToSftpEndpoint(proofOfSchemeInvolvement.getInputStream(), destinationPath, proofOfSchemeInvolvement.getOriginalFilename());
+            if (isNotBlank(identification.getOriginalFilename())) {
+                sftpService.sendToSftpEndpoint(identification.getInputStream(), destinationPath, identification.getOriginalFilename());
+            }
+
+            if (isNotBlank(proofOfSchemeInvolvement.getOriginalFilename())) {
+                sftpService.sendToSftpEndpoint(proofOfSchemeInvolvement.getInputStream(), destinationPath, proofOfSchemeInvolvement.getOriginalFilename());
+            }
 
             mailSenderService.sendFollowUpEmail(member);
             return "thankYou";
