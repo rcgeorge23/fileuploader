@@ -19,6 +19,8 @@ public class Member {
     private Boolean memberOfBigGroup;
     private String howDidYouHearAboutLcag;
     private String bigGroupUsername;
+    private Boolean hmrcLetterChecked;
+    private Boolean identificationChecked;
 
     public Member() {
     }
@@ -38,7 +40,10 @@ public class Member {
             String token,
             Boolean completedMembershipForm,
             Boolean memberOfBigGroup,
-            String howDidYouHearAboutLcag, String bigGroupUsername) {
+            String howDidYouHearAboutLcag,
+            String bigGroupUsername,
+            Boolean hmrcLetterChecked,
+            Boolean identificationChecked) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -55,6 +60,8 @@ public class Member {
         this.memberOfBigGroup = memberOfBigGroup;
         this.howDidYouHearAboutLcag = howDidYouHearAboutLcag;
         this.bigGroupUsername = bigGroupUsername;
+        this.hmrcLetterChecked = hmrcLetterChecked;
+        this.identificationChecked = identificationChecked;
     }
 
     public String getEmailAddress() {
@@ -188,5 +195,21 @@ public class Member {
 
     public void setBigGroupUsername(String bigGroupUsername) {
         this.bigGroupUsername = bigGroupUsername;
+    }
+
+    public Boolean getHmrcLetterChecked() {
+        return hmrcLetterChecked;
+    }
+
+    public void setHmrcLetterChecked(Boolean hmrcLetterChecked) {
+        this.hmrcLetterChecked = hmrcLetterChecked;
+    }
+
+    public Boolean getIdentificationChecked() {
+        return identificationChecked;
+    }
+
+    public void setIdentificationChecked(Boolean identificationChecked) {
+        this.identificationChecked = identificationChecked;
     }
 }

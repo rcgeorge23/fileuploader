@@ -36,6 +36,9 @@
                             <p>Dear <span id="salutation">Potential LCAG Member</span>,</p>
                             <p>Welcome to the Loan Charge Action Group secure membership form. We need to collect a few details from you in order to process
                             your application. Please provide the information requested below and we will get back to you as soon as we can.</p>
+                            <p>None of the details we collect will be shared with third parties and your proof of ID and scheme documentation will be
+                            deleted as soon as we have finished verifying you.</p>
+                            <p>If you have any questions please contact <a href="mailto:membership@hmrcloancharge.info">membership@hmrcloancharge.info</a></p>
                             <p>Many thanks,<br/>LCAG Membership Team</p>
                         </div>
                     </div>
@@ -167,6 +170,8 @@
         </div>
 
         <script type="text/javascript">
+            var member = null;
+
             function getParameterByName(name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");
@@ -181,10 +186,19 @@
                 $("input[type=radio][name=memberOfBigGroup]").change(function() {
                     if (this.value == 'true') {
                         $("#bigGroupUsernameSection").show();
+                        $("#bigGroupUsername").prop('required', true);
+                        $("#identification").prop('required', false);
+                        $("#proofOfSchemeInvolvement").prop('required', false);
                         $("#idDocumentationSection").hide();
                     } else {
                         $("#bigGroupUsernameSection").hide();
-                        $("#idDocumentationSection").show();
+                        $("#bigGroupUsername").prop('required', false);
+                        console.log("member", member);
+                        if (member.hmrcLetterChecked == false && member.identificationChecked == false) {
+                            $("#identification").prop('required', true);
+                            $("#proofOfSchemeInvolvement").prop('required', true);
+                            $("#idDocumentationSection").show();
+                        }
                     }
                 });
 
@@ -194,7 +208,7 @@
                     dataType: "json",
                     complete: function(response, status) {
                         if (status == "success") {
-                            var member = response.responseJSON;
+                            member = response.responseJSON;
                             $('#name').val(member.name);
                             $('#salutation').text(member.name);
                             $('#emailAddress').val(member.emailAddress);
@@ -217,7 +231,6 @@
                     errorPlacement: function ( error, element ) {
                         error.addClass( "help-block" );
                         element.parents( ".form-group" ).addClass( "has-feedback" );
-                        console.log("element", element);
 
                         if ($(element).attr('id') == 'memberOfBigGroupYes') {
                             error.insertAfter( $(element).parent().parent() );

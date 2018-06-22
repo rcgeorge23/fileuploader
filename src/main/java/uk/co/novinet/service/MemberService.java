@@ -100,7 +100,10 @@ public class MemberService {
                 rs.getBoolean("has_completed_membership_form"),
                 rs.getBoolean("member_of_big_group"),
                 rs.getString("how_did_you_hear_about_lcag"),
-                rs.getString("big_group_username"));
+                rs.getString("big_group_username"),
+                rs.getBoolean("hmrc_letter_checked"),
+                rs.getBoolean("identification_checked")
+        );
     }
 
 }
