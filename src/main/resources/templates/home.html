@@ -169,7 +169,8 @@
             </div>
         </div>
 
-        <script type="text/javascript">
+    </body>
+<script type="text/javascript">
             var member = null;
 
             function getParameterByName(name, url) {
@@ -185,20 +186,9 @@
             $(function () {
                 $("input[type=radio][name=memberOfBigGroup]").change(function() {
                     if (this.value == 'true') {
-                        $("#bigGroupUsernameSection").show();
-                        $("#bigGroupUsername").prop('required', true);
-                        $("#identification").prop('required', false);
-                        $("#proofOfSchemeInvolvement").prop('required', false);
-                        $("#idDocumentationSection").hide();
+                        showBigGroupUsernameSection();
                     } else {
-                        $("#bigGroupUsernameSection").hide();
-                        $("#bigGroupUsername").prop('required', false);
-                        console.log("member", member);
-                        if (member.hmrcLetterChecked == false && member.identificationChecked == false) {
-                            $("#identification").prop('required', true);
-                            $("#proofOfSchemeInvolvement").prop('required', true);
-                            $("#idDocumentationSection").show();
-                        }
+                        showDocumentUploadSection();
                     }
                 });
 
@@ -220,6 +210,13 @@
                             $('#schemes').val(member.schemes);
                             $('#industry').val(member.industry);
                             $('#howDidYouHearAboutLcag').val(member.howDidYouHearAboutLcag);
+
+                            if (member.memberOfBigGroup) {
+                                $("#memberOfBigGroupYes").prop("checked", member.memberOfBigGroup);
+                                showBigGroupUsernameSection();
+                            }
+
+                            $('#bigGroupUsername').val(member.bigGroupUsername);
                         }
                     }
                 });
@@ -277,7 +274,23 @@
                 });
             });
 
+            function showBigGroupUsernameSection() {
+                $("#bigGroupUsernameSection").show();
+                $("#bigGroupUsername").prop('required', true);
+                $("#identification").prop('required', false);
+                $("#proofOfSchemeInvolvement").prop('required', false);
+                $("#idDocumentationSection").hide();
+            }
 
+            function showDocumentUploadSection() {
+                $("#bigGroupUsernameSection").hide();
+                $("#bigGroupUsername").prop('required', false);
+                console.log("member", member);
+                if (member.hmrcLetterChecked == false && member.identificationChecked == false) {
+                    $("#identification").prop('required', true);
+                    $("#proofOfSchemeInvolvement").prop('required', true);
+                    $("#idDocumentationSection").show();
+                }
+            }
         </script>
-    </body>
 </html>
