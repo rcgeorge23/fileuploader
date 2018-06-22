@@ -86,19 +86,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input id="mpEngaged" name="mpEngaged" type="checkbox"> Have you engaged your MP?
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="mpSympathetic" name="mpSympathetic" type="checkbox"> Is your MP sympathetic?
-                                                </label>
-                                            </div>
-                                        </div>
+                                    <label>Have you engaged your MP?</label>
+                                    <div>
+                                        <label class="radio-inline"> <input type="radio" name="mpEngaged" id="mpEngagedYes" value="true" required> Yes </label>
+                                        <label class="radio-inline"> <input type="radio" name="mpEngaged" id="mpEngagedNo" value="false" required> No </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Have you engaged your MP?</label>
+                                    <div>
+                                        <label class="radio-inline"> <input type="radio" name="mpSympathetic" id="mpSympatheticYes" value="true" required> Yes </label>
+                                        <label class="radio-inline"> <input type="radio" name="mpSympathetic" id="mpSympatheticNo" value="false" required> No </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -205,8 +203,8 @@
                             $('#mpName').val(member.mpName);
                             $('#mpConstituency').val(member.mpConstituency);
                             $('#mpParty').val(member.mpParty);
-                            $('#mpEngaged').prop("checked", member.mpEngaged == true ? "checked" : "");
-                            $('#mpSympathetic').prop("checked", member.mpSympathetic == true ? "checked" : "");
+                            $('#mpEngagedYes').prop("checked", member.mpEngaged);
+                            $('#mpSympatheticYes').prop("checked", member.mpSympathetic);
                             $('#schemes').val(member.schemes);
                             $('#industry').val(member.industry);
                             $('#howDidYouHearAboutLcag').val(member.howDidYouHearAboutLcag);
@@ -229,14 +227,14 @@
                         error.addClass( "help-block" );
                         element.parents( ".form-group" ).addClass( "has-feedback" );
 
-                        if ($(element).attr('id') == 'memberOfBigGroupYes') {
+                        if ($(element).attr('type') == 'radio') {
                             error.insertAfter( $(element).parent().parent() );
                         } else {
                             error.insertAfter( $(element).parent() );
                         }
 
                         if ( !element.next( "span" )[ 0 ] ) {
-                            if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                            if ($(element).attr('type') == 'radio') {
                                 $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( $(element).parent().parent() );
                             } else {
                                 $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( $(element) );
@@ -244,7 +242,7 @@
                         }
                     },
                     success: function ( label, element ) {
-                        if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                        if ($(element).attr('type') == 'radio') {
                             if ( !$( element ).parent().parent().next( "span" )[ 0 ] ) {
                                 $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $(element).parent().parent() );
                             }
@@ -256,7 +254,7 @@
                     },
                     highlight: function ( element, errorClass, validClass ) {
                         $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
-                        if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                        if ($(element).attr('type') == 'radio') {
                             $( element ).parent().parent().next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
                         } else {
                             $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
@@ -264,7 +262,7 @@
                     },
                     unhighlight: function ( element, errorClass, validClass ) {
                         $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-error" );
-                        if ($(element).attr('id') == 'memberOfBigGroupYes' || $(element).attr('id') == 'memberOfBigGroupNo') {
+                        if ($(element).attr('type') == 'radio') {
                             console.log("element", $(element));
                             $( element ).parent().parent().next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
                         } else {
