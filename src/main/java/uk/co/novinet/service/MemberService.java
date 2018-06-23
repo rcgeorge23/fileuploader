@@ -40,7 +40,9 @@ public class MemberService {
                 "u.name = ?, " +
                 "u.email = ?, " +
                 "u.has_completed_membership_form = ?, " +
-                "u.how_did_you_hear_about_lcag = ? " +
+                "u.how_did_you_hear_about_lcag = ?, " +
+                "u.member_of_big_group = ?, " +
+                "u.big_group_username = ? " +
                 "where u.token = ?";
 
         LOGGER.info("Created sql: {}", sql);
@@ -58,6 +60,8 @@ public class MemberService {
                 member.getEmailAddress(),
                 true,
                 member.getHowDidYouHearAboutLcag(),
+                member.getMemberOfBigGroup() == null ? "" : member.getMemberOfBigGroup(),
+                member.getBigGroupUsername(),
                 member.getToken()
         );
 

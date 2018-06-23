@@ -31,22 +31,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>Dear <span id="salutation">Potential LCAG Member</span>,</p>
-                            <p>Welcome to the Loan Charge Action Group secure membership form. We need to collect a few details from you in order to process
-                            your application. Please provide the information requested below and we will get back to you as soon as we can.</p>
-                            <p>None of the details we collect will be shared with third parties and your proof of ID and scheme documentation will be
-                            deleted as soon as we have finished verifying you.</p>
-                            <p>If you have any questions please contact <a href="mailto:membership@hmrcloancharge.info">membership@hmrcloancharge.info</a></p>
-                            <p>Many thanks,<br/>LCAG Membership Team</p>
-                        </div>
-                    </div>
                     <form id="inputFieldForm" action="/submit" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="token" value="" id="token" />
                         <div class="panel panel-default">
 
-                            <div class="panel-heading">Secure Upload<div class="pull-right"><i class="fa fa-lock" aria-hidden="true"></i></div></div>
+                            <div class="panel-heading">Secure Membership Form<div class="pull-right"><i class="fa fa-lock" aria-hidden="true"></i></div></div>
 
                             <div class="panel-body">
 
@@ -93,7 +82,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Have you engaged your MP?</label>
+                                    <label>Is your MP sympathetic?</label>
                                     <div>
                                         <label class="radio-inline"> <input type="radio" name="mpSympathetic" id="mpSympatheticYes" value="true" required> Yes </label>
                                         <label class="radio-inline"> <input type="radio" name="mpSympathetic" id="mpSympatheticNo" value="false" required> No </label>
@@ -136,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div id="idDocumentationSection" style="display: none;">
-                                    <p>If you are not a member of Big Group you must provide proof of ID and scheme involvement.</p>
+                                    <p>If you are not a member of Big Group you must provide proof of ID and scheme involvement in order for us to verify your identity.</p>
                                     <p>Proof of ID should be either a scan of your passport or driving license.</p>
                                     <p>Proof of scheme involvement should be one of:</p>
                                         <ul>
@@ -145,6 +134,7 @@
                                             <li>APN letter</li>
                                             <li>Scheme contract OR loan agreement with your name visible</li>
                                         </ul>
+                                    <p>Once we have verified your identity we will delete your documents you have sent us.</p>
                                     <div class="form-group">
                                         <label for="identification">Proof of ID (passport or driving license)</label>
                                         <input type="file" name="identification" class="form-control" id="identification" required />
