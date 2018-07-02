@@ -1,3 +1,4 @@
-import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.chrome.ChromeDriver
 
-driver = { new FirefoxDriver() }
+System.setProperty("webdriver.chrome.driver", "/Users/rcgeorge23/Documents/workspace/fileuploader/browser-drivers/chromedriver");
+driver = { new ChromeDriver() }
