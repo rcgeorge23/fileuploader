@@ -14,11 +14,32 @@ class MembershipFormPage extends Page {
         mpNameInput { $("#mpName") }
         mpPartyInput { $("#mpParty") }
         mpConstituencyInput { $("#mpConstituency") }
-        mpEngagedInput { $("#mpEngaged") }
-        mpSympatheticInput { $("#mpSympathetic") }
+        mpEngagedInput { $("input[name=mpEngaged]") }
+        mpSympatheticInput { $("input[name=mpSympathetic]") }
         schemesInput { $("#schemes") }
         industryInput { $("#industry") }
+        howDidYouHearAboutLcagInput { $("#howDidYouHearAboutLcag") }
+        memberOfBigGroupInput { $("input[name=memberOfBigGroup]") }
+        bigGroupUsernameInput { $("#bigGroupUsername") }
         identificationInput { $("#identification") }
         proofOfSchemeInvolvementInput { $("#proofOfSchemeInvolvement") }
+
+        //errors
+        nameInputError { $("#name-error") }
+        emailAddressError { $("#emailAddress-error") }
+        mpNameError { $("#mpName-error") }
+        mpPartyError { $("#mpParty-error") }
+        mpConstituencyError { $("#mpConstituency-error") }
+        mpEngagedError { $("#mpEngaged-error") }
+        mpSympatheticError { $("#mpSympathetic-error") }
+        schemesError { $("#schemes-error") }
+        industryError { $("#industry-error") }
+        howDidYouHearAboutLcagError { $("#howDidYouHearAboutLcag-error") }
+        memberOfBigGroupError { $("#memberOfBigGroup-error") }
+        bigGroupUsernameError { $("#bigGroupUsername-error") }
+        identificationError { $("#identification-error") }
+        proofOfSchemeInvolvementError { $("#proofOfSchemeInvolvement-error") }
+
+        submitButton { $("#uploadButton") }
     }
 }

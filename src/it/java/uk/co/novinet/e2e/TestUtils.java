@@ -129,7 +129,17 @@ public class TestUtils {
                         resultSet.getInt("uid"),
                         resultSet.getString("username"),
                         resultSet.getString("email"),
-                        resultSet.getString("name"))
+                        resultSet.getString("name"),
+                        resultSet.getString("mp_name"),
+                        resultSet.getString("mp_party"),
+                        resultSet.getString("mp_constituency"),
+                        resultSet.getBoolean("mp_engaged"),
+                        resultSet.getBoolean("mp_sympathetic"),
+                        resultSet.getString("schemes"),
+                        resultSet.getString("industry"),
+                        resultSet.getString("how_did_you_hear_about_lcag"),
+                        resultSet.getBoolean("member_of_big_group"),
+                        resultSet.getString("big_group_username"))
                 );
             }
 
