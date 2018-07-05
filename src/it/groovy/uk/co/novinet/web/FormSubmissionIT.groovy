@@ -2,6 +2,7 @@ package uk.co.novinet.web
 
 import geb.spock.GebSpec
 import org.apache.commons.io.FileUtils
+import uk.co.novinet.e2e.TestSftpService
 import uk.co.novinet.e2e.TestUtils
 import uk.co.novinet.e2e.User
 
@@ -21,6 +22,7 @@ class FormSubmissionIT extends GebSpec {
     static final bigGroupUsername = "bigGroupUsername"
 
     def setup() {
+        new TestSftpService().removeAllDocsForEmailAddress("test@test.com")
         setupDatabaseSchema()
     }
 
@@ -147,7 +149,7 @@ class FormSubmissionIT extends GebSpec {
             assert schemesError.displayed
             assert industryError.displayed
             assert howDidYouHearAboutLcagError.displayed
-            assert bigGroupUsernameError.present() == false
+            assert $("#bigGroupUsername-error").displayed == false
             assert identificationError.displayed
             assert proofOfSchemeInvolvementError.displayed
     }
@@ -199,6 +201,7 @@ class FormSubmissionIT extends GebSpec {
             FileUtils.write(idendificationFile, "Identification", "UTF-8")
             File proofOfSchemeInvolvementFile = File.createTempFile("lcag", "test")
             FileUtils.write(proofOfSchemeInvolvementFile, "Proof of scheme involvement", "UTF-8")
+            assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").size() == 0
 
         when:
             nameInput.value("john smith")
@@ -216,7 +219,7 @@ class FormSubmissionIT extends GebSpec {
             proofOfSchemeInvolvementInput.value(proofOfSchemeInvolvementFile.getAbsolutePath())
             submitButton.click()
 
-        then: "all previous errors are displayed as well as the big group username validation error"
+        then:
             waitFor { at ThankYouPage }
             def member = getUserRows().get(0)
             assert member.name == "john smith"
@@ -231,9 +234,8 @@ class FormSubmissionIT extends GebSpec {
             assert member.howDidYouHearAboutLcag == "from contractor uk forum"
             assert member.memberOfBigGroup == false
             assert member.bigGroupUsername == ""
+            assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").size() == 2
     }
-
-
 
     private prepopulateMemberDataInDb() {
         runSqlUpdate("update `i7b0_users` set " +
