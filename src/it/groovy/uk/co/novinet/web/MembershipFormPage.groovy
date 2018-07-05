@@ -39,6 +39,7 @@ class MembershipFormPage extends Page {
         bigGroupUsernameError { $("#bigGroupUsername-error") }
         identificationError { $("#identification-error") }
         proofOfSchemeInvolvementError { $("#proofOfSchemeInvolvement-error") }
+        documentUploadErrorBanner { $("#documentUploadErrorBanner") }
 
         submitButton { $("#uploadButton") }
     }

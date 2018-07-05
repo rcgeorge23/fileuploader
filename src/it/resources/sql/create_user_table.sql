@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `i7b0_users` (
   `member_of_big_group` tinyint(1) NOT NULL DEFAULT '0',
   `big_group_username` varchar(200) NOT NULL DEFAULT '',
   `already_have_an_lcag_account_email_sent` tinyint(1) NOT NULL DEFAULT '0',
+  `document_upload_error` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `username` (`username`),
   KEY `usergroup` (`usergroup`),

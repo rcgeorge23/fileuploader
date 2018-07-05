@@ -42,7 +42,8 @@ public class MemberService {
                 "u.has_completed_membership_form = ?, " +
                 "u.how_did_you_hear_about_lcag = ?, " +
                 "u.member_of_big_group = ?, " +
-                "u.big_group_username = ? " +
+                "u.big_group_username = ?, " +
+                "u.document_upload_error = ? " +
                 "where u.token = ?";
 
         LOGGER.info("Created sql: {}", sql);
@@ -58,10 +59,11 @@ public class MemberService {
                 member.getIndustry(),
                 member.getName(),
                 member.getEmailAddress(),
-                true,
+                member.hasCompletedMembershipForm(),
                 member.getHowDidYouHearAboutLcag(),
                 member.getMemberOfBigGroup() == null ? "" : member.getMemberOfBigGroup(),
                 member.getBigGroupUsername(),
+                member.getDocumentUploadError(),
                 member.getToken()
         );
 
@@ -106,7 +108,8 @@ public class MemberService {
                 rs.getString("how_did_you_hear_about_lcag"),
                 rs.getString("big_group_username"),
                 rs.getBoolean("hmrc_letter_checked"),
-                rs.getBoolean("identification_checked")
+                rs.getBoolean("identification_checked"),
+                rs.getBoolean("document_upload_error")
         );
     }
 

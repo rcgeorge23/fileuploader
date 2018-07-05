@@ -1,4 +1,4 @@
-package uk.co.novinet.e2e;
+package uk.co.novinet.service;
 
 import java.time.Instant;
 

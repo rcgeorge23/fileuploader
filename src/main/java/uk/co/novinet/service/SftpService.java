@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 @Service
@@ -57,7 +57,7 @@ public class SftpService {
 
             createDestinationDirectoryIfNecessary(sftpRootDirectory + "/" + destinationPath, sftpChannel);
 
-            sftpChannel.put(inputStream, sftpRootDirectory + destinationPath + "/" + filename);
+            sftpChannel.put(inputStream, sftpRootDirectory + "/" + destinationPath + "/" + filename);
         } catch (Exception e) {
             LOGGER.error("Unable to sftp file {} to {}", filename, destinationPath, e);
             throw new RuntimeException(e);
@@ -79,6 +79,55 @@ public class SftpService {
                     sftpChannel.mkdir(folder);
                     sftpChannel.cd(folder);
                 }
+            }
+        }
+    }
+
+    public List<SftpDocument> getAllDocumentsForPath(String path) {
+        JSch jsch = new JSch();
+        Session session = null;
+        ChannelSftp sftpChannel = null;
+        List<SftpDocument> sftpDocuments = new ArrayList<>();
+
+        try {
+            session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
+            session.setPassword(sftpPassword);
+
+            java.util.Properties config = new java.util.Properties();
+            config.put("StrictHostKeyChecking", "no");
+            session.setConfig(config);
+
+            session.connect();
+
+            sftpChannel = (ChannelSftp) session.openChannel("sftp");
+            sftpChannel.connect();
+
+            path = sftpRootDirectory + "/" + path;
+
+            Vector<ChannelSftp.LsEntry> memberDocuments = null;
+
+            try {
+                memberDocuments = sftpChannel.ls(path);
+            } catch (SftpException e) {
+                return sftpDocuments;
+            }
+
+            for (ChannelSftp.LsEntry documentLsEntry : memberDocuments) {
+                if (!documentLsEntry.getAttrs().isDir()) {
+                    sftpDocuments.add(new SftpDocument(
+                            documentLsEntry.getFilename(), path + "/" + documentLsEntry.getFilename(),
+                            Instant.ofEpochMilli(documentLsEntry.getAttrs().getMTime()),
+                            documentLsEntry.getAttrs().getSize())
+                    );
+                }
+            }
+
+            return sftpDocuments;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (session.isConnected()) {
+                session.disconnect();
             }
         }
     }

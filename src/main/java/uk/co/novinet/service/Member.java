@@ -21,6 +21,7 @@ public class Member {
     private String bigGroupUsername;
     private Boolean hmrcLetterChecked;
     private Boolean identificationChecked;
+    private Boolean documentUploadError;
 
     public Member() {
     }
@@ -43,7 +44,8 @@ public class Member {
             String howDidYouHearAboutLcag,
             String bigGroupUsername,
             Boolean hmrcLetterChecked,
-            Boolean identificationChecked) {
+            Boolean identificationChecked,
+            Boolean documentUploadError) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -62,6 +64,7 @@ public class Member {
         this.bigGroupUsername = bigGroupUsername;
         this.hmrcLetterChecked = hmrcLetterChecked;
         this.identificationChecked = identificationChecked;
+        this.documentUploadError = documentUploadError;
     }
 
     public String getEmailAddress() {
@@ -211,5 +214,13 @@ public class Member {
 
     public void setIdentificationChecked(Boolean identificationChecked) {
         this.identificationChecked = identificationChecked;
+    }
+
+    public Boolean getDocumentUploadError() {
+        return documentUploadError;
+    }
+
+    public void setDocumentUploadError(Boolean documentUploadError) {
+        this.documentUploadError = documentUploadError;
     }
 }

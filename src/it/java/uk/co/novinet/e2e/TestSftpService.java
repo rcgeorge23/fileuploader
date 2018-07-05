@@ -129,7 +129,7 @@ public class TestSftpService {
                     Vector<ChannelSftp.LsEntry> memberDocuments = sftpChannel.ls(timestampSubdirectory);
                     for (ChannelSftp.LsEntry documentLsEntry : memberDocuments) {
                         if (!documentLsEntry.getAttrs().isDir()) {
-                            sftpDocuments.add(new SftpDocument(documentLsEntry.getFilename(), timestampSubdirectory + "/" + documentLsEntry.getFilename(), Instant.ofEpochMilli(Long.parseLong(timestampSubdirectoryLsEntry.getFilename()))));
+                            sftpDocuments.add(new SftpDocument(documentLsEntry.getFilename(), timestampSubdirectory + "/" + documentLsEntry.getFilename(), Instant.ofEpochMilli(Long.parseLong(timestampSubdirectoryLsEntry.getFilename())), documentLsEntry.getAttrs().getSize()));
                         }
                     }
                 }

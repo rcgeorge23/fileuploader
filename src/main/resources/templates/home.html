@@ -28,9 +28,18 @@
             </div>
         </nav>
 
+
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div id="documentUploadErrorBanner" style="display: none;">
+                        <div id="inner-message" class="alert alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Sorry, we experienced a problem receiving your documents - can you please try submitting them again.<br/>
+                            If the problem persists, please contact membership@hmrcloancharge.info.
+                        </div>
+                    </div>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <p>Dear <span id="salutation">Potential LCAG Member</span>,</p>
@@ -147,6 +156,20 @@
                                             <li>Scheme contract OR loan agreement with your name visible</li>
                                         </ul>
                                     <p>Once we have verified your identity we will delete the documents you have sent us.</p>
+                                    <div id="inner-message" class="alert alert-info">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <i class="fa fa-info-circle fa-3x"></i>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <b>Please note</b> if you have a slow internet connection and you are uploading large documents, submitting this form may take a few minutes.<br/>
+                                                    Please do not refresh or navigate away from the page as we may not receive your documents.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="identification">Proof of ID (passport or driving license)</label>
                                         <input type="file" name="identification" class="form-control" id="identification" required />
@@ -198,6 +221,9 @@
                     complete: function(response, status) {
                         if (status == "success") {
                             member = response.responseJSON;
+
+                            console.log("member", response.responseJSON);
+
                             $('#name').val(member.name);
                             $('#salutation').text(member.name);
                             $('#emailAddress').val(member.emailAddress);
@@ -213,6 +239,11 @@
                             if (member.memberOfBigGroup) {
                                 $("#memberOfBigGroupYes").prop("checked", member.memberOfBigGroup);
                                 showBigGroupUsernameSection();
+                            }
+
+                            if (member.documentUploadError) {
+                                $("#documentUploadErrorBanner").show();
+                                showDocumentUploadSection();
                             }
 
                             $('#bigGroupUsername').val(member.bigGroupUsername);
@@ -282,6 +313,7 @@
             }
 
             function showDocumentUploadSection() {
+                $("#memberOfBigGroupNo").prop('checked', true);
                 $("#bigGroupUsernameSection").hide();
                 $("#bigGroupUsername").prop('required', false);
                 console.log("member", member);
