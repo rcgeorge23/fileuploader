@@ -107,4 +107,44 @@ class UnknownUserWithNewParameterIT extends GebSpec {
         assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").get(1).getSize() > 0L
     }
 
+    def "can complete membership form with big group username"() {
+        given:
+        go "http://localhost:8383?n=t"
+        waitFor { at MembershipFormPage }
+
+        when:
+        nameInput.value("john smith")
+        emailAddressInput.value("test@test.com")
+        mpNameInput.value("some mp")
+        mpPartyInput.value("conservative")
+        mpConstituencyInput.value("some constituency")
+        mpEngagedInput.value(true)
+        mpSympatheticInput.value(true)
+        schemesInput.value("scheme 1 and scheme 2")
+        industryInput.value("some industry")
+        howDidYouHearAboutLcagInput.value("from contractor uk forum")
+        memberOfBigGroupInput.value(true)
+        bigGroupUsernameInput.value(bigGroupUsername)
+        submitButton.click()
+
+        then:
+        waitFor { at ThankYouPage }
+        def enquiry = getEnquiryRows().get(0)
+        assert enquiry.name == "john smith"
+        assert enquiry.emailAddress == "test@test.com"
+        assert enquiry.mpName == "some mp"
+        assert enquiry.mpParty == "conservative"
+        assert enquiry.mpConstituency == "some constituency"
+        assert enquiry.mpEngaged == true
+        assert enquiry.mpSympathetic == true
+        assert enquiry.schemes == "scheme 1 and scheme 2"
+        assert enquiry.industry == "some industry"
+        assert enquiry.howDidYouHearAboutLcag == "from contractor uk forum"
+        assert enquiry.memberOfBigGroup == true
+        assert enquiry.bigGroupUsername == bigGroupUsername
+        assert enquiry.hasBeenProcessed == false
+        assert enquiry.dateCreated.isAfter(Instant.now().minusMillis(1000))
+        assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").size() == 0
+    }
+
 }
