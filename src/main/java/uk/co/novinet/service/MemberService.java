@@ -28,6 +28,7 @@ public class MemberService {
         if (existingMember == null) {
             LOGGER.info("No member found for token: " + member.getToken() + " so going to create a new one.");
             createNewMemberEnquiry(member);
+            return;
         }
 
         LOGGER.info("Going to update member: {}", member);

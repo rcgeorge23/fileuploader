@@ -47,7 +47,7 @@ public class HomeController {
         }
 
         if (member.hasCompletedMembershipForm()) {
-            return "thankYou";
+            return "alreadyCompletedMembershipForm";
         }
 
         return "home";
@@ -96,7 +96,7 @@ public class HomeController {
 
             if (member.hasCompletedMembershipForm()) {
                 mailSenderService.sendFollowUpEmail(member);
-                return new ModelAndView("thankYou", model);
+                return new ModelAndView(StringUtils.isBlank(member.getToken()) ? "enquiryThankYou" : "legacyThankYou", model);
             }
 
             return new ModelAndView("redirect:/", model);

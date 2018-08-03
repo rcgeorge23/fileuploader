@@ -1,11 +1,8 @@
 package uk.co.novinet.web
 
 import geb.spock.GebSpec
-import org.apache.commons.io.FileUtils
 import uk.co.novinet.e2e.SftpDocument
 import uk.co.novinet.e2e.TestSftpService
-import uk.co.novinet.e2e.TestUtils
-import uk.co.novinet.e2e.User
 
 import static uk.co.novinet.e2e.TestUtils.*
 import static uk.co.novinet.web.GebTestUtils.createFileWithSize
@@ -186,7 +183,7 @@ class FormSubmissionIT extends GebSpec {
             submitButton.click()
 
         then: "all previous errors are displayed as well as the big group username validation error"
-            waitFor { at ThankYouPage }
+            waitFor { at LegacyThankYouPage }
             def member = getUserRows().get(0)
             assert member.name == "john smith"
             assert member.emailAddress == "test@test.com"
@@ -228,7 +225,7 @@ class FormSubmissionIT extends GebSpec {
             submitButton.click()
 
         then:
-            waitFor { at ThankYouPage }
+            waitFor { at LegacyThankYouPage }
             def member = getUserRows().get(0)
             assert member.name == "john smith"
             assert member.emailAddress == "test@test.com"
@@ -314,7 +311,7 @@ class FormSubmissionIT extends GebSpec {
             proofOfSchemeInvolvementInput.value(proofOfSchemeInvolvementFile.getAbsolutePath())
 
             submitButton.click()
-            waitFor { at ThankYouPage }
+            waitFor { at LegacyThankYouPage }
             member = getUserRows().get(0)
             List<SftpDocument> sftpDocuments = new TestSftpService().getAllDocumentsForEmailAddress("test@test.com")
 

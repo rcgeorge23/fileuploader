@@ -1,8 +1,6 @@
 package uk.co.novinet.web
 
 import geb.spock.GebSpec
-import org.apache.commons.io.FileUtils
-import uk.co.novinet.e2e.SftpDocument
 import uk.co.novinet.e2e.TestSftpService
 
 import java.time.Instant
@@ -86,7 +84,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
         submitButton.click()
 
         then:
-        waitFor { at ThankYouPage }
+        waitFor { at EnquiryThankYouPage }
         def enquiry = getEnquiryRows().get(0)
         assert enquiry.name == "john smith"
         assert enquiry.emailAddress == "test@test.com"
@@ -128,7 +126,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
         submitButton.click()
 
         then:
-        waitFor { at ThankYouPage }
+        waitFor { at EnquiryThankYouPage }
         def enquiry = getEnquiryRows().get(0)
         assert enquiry.name == "john smith"
         assert enquiry.emailAddress == "test@test.com"
