@@ -8,6 +8,7 @@ import uk.co.novinet.e2e.TestUtils
 import uk.co.novinet.e2e.User
 
 import static uk.co.novinet.e2e.TestUtils.*
+import static uk.co.novinet.web.GebTestUtils.createFileWithSize
 
 class FormSubmissionIT extends GebSpec {
 
@@ -321,8 +322,8 @@ class FormSubmissionIT extends GebSpec {
                 @Override
                 int compare(SftpDocument o1, SftpDocument o2) {
                     if (o1.size == o2.size) return 0
-                    if (o1.size > o2.size) return 1
-                    return -1
+                    if (o1.size > o2.size) return -1
+                    return 1
                 }
             })
 
@@ -344,14 +345,6 @@ class FormSubmissionIT extends GebSpec {
             assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").get(1).getSize() == 0L
             assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").get(2).getSize() > 0L
             assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").get(3).getSize() > 0L
-    }
-
-    private createFileWithSize(Long kb) {
-        def file = File.createTempFile("lcag", "test")
-        FileUtils.touch(file)
-        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw")
-        randomAccessFile.setLength(1024 * kb)
-        return file
     }
 
     private prepopulateMemberDataInDb() {

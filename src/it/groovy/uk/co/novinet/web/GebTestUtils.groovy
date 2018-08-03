@@ -1,8 +1,18 @@
 package uk.co.novinet.web
 
 import geb.Browser
+import org.apache.commons.io.FileUtils
 
 class GebTestUtils {
+
+    static File createFileWithSize(Long kb) {
+        def file = File.createTempFile("lcag", "test")
+        FileUtils.touch(file)
+        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw")
+        randomAccessFile.setLength(1024 * kb)
+        return file
+    }
+
     static boolean switchToGuestVerificationTabIfNecessaryAndAssertGridHasNRows(Browser browser, int expectedNumberOfRows) {
         if (expectedNumberOfRows == 0) {
             assert browser.guestsAwaitingVerificationTab.text() == "Guests Awaiting Verification"

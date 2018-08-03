@@ -35,7 +35,11 @@ public class HomeController {
     private SftpService sftpService;
 
     @GetMapping("/")
-    public String get(@RequestParam(value = "token", required = false) String token) {
+    public String get(@RequestParam(value = "n", required = false) String newGuest, @RequestParam(value = "token", required = false) String token) {
+        if ("t".equals(newGuest)) {
+            return "home";
+        }
+
         Member member = memberService.findMemberByToken(token);
 
         if (member == null) {
@@ -88,7 +92,7 @@ public class HomeController {
                 member.setCompletedMembershipForm(true);
             }
 
-            memberService.update(member);
+            memberService.updateOrCreate(member);
 
             if (member.hasCompletedMembershipForm()) {
                 mailSenderService.sendFollowUpEmail(member);

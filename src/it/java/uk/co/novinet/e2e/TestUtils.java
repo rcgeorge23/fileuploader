@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import static java.lang.Thread.sleep;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
+import static uk.co.novinet.service.PersistenceUtils.dateFromMyBbRow;
 
 public class TestUtils {
 
@@ -56,7 +57,9 @@ public class TestUtils {
         while (needToRetry && sqlRetryCounter < 60) {
             try {
                 runSqlScript("sql/drop_user_table.sql");
+                runSqlScript("sql/drop_enquiry_table.sql");
                 runSqlScript("sql/create_user_table.sql");
+                runSqlScript("sql/create_enquiry_table.sql");
                 runSqlScript("sql/create_usergroups_table.sql");
                 runSqlScript("sql/populate_usergroups_table.sql");
 
@@ -144,6 +147,50 @@ public class TestUtils {
             }
 
             return users;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (statement != null) connection.close();
+            } catch (SQLException ignored) { }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException ignored) { }
+        }
+    }
+
+    static List<Enquiry> getEnquiryRows() {
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from i7b0_enquiry");
+            List<Enquiry> enquiries = new ArrayList<>();
+
+            while (resultSet.next()) {
+                enquiries.add(new Enquiry(
+                        resultSet.getInt("id"),
+                        resultSet.getString("email_address"),
+                        resultSet.getString("name"),
+                        resultSet.getString("mp_name"),
+                        resultSet.getString("mp_party"),
+                        resultSet.getString("mp_constituency"),
+                        resultSet.getBoolean("mp_engaged"),
+                        resultSet.getBoolean("mp_sympathetic"),
+                        resultSet.getString("schemes"),
+                        resultSet.getString("industry"),
+                        resultSet.getString("how_did_you_hear_about_lcag"),
+                        resultSet.getBoolean("member_of_big_group"),
+                        resultSet.getString("big_group_username"),
+                        resultSet.getBoolean("has_been_processed"),
+                        dateFromMyBbRow(resultSet, "date_created")
+                    )
+                );
+            }
+
+            return enquiries;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

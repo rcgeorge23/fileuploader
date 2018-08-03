@@ -89,6 +89,10 @@ public class PersistenceUtils {
         return forumDatabaseTablePrefix + "users";
     }
 
+    public static String enquiryTableName() {
+        return forumDatabaseTablePrefix + "enquiry";
+    }
+
     public static String userGroupsTableName() {
         return forumDatabaseTablePrefix + "usergroups";
     }

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
-import static uk.co.novinet.service.PersistenceUtils.usersTableName;
+import static uk.co.novinet.service.PersistenceUtils.*;
 
 @Service
 public class MemberService {
@@ -20,11 +22,12 @@ public class MemberService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void update(Member member) {
+    public void updateOrCreate(Member member) {
         Member existingMember = findMemberByToken(member.getToken());
 
         if (existingMember == null) {
-            throw new RuntimeException("Member with token " + member.getToken() + " not found");
+            LOGGER.info("No member found for token: " + member.getToken() + " so going to create a new one.");
+            createNewMemberEnquiry(member);
         }
 
         LOGGER.info("Going to update member: {}", member);
@@ -65,6 +68,41 @@ public class MemberService {
                 member.getBigGroupUsername(),
                 member.getDocumentUploadError(),
                 member.getToken()
+        );
+
+        LOGGER.info("Update result: {}", result);
+    }
+
+    private void createNewMemberEnquiry(Member member) {
+        LOGGER.info("Going to insert enquiry: {}", member);
+
+        String sql = "insert into " + enquiryTableName() +
+                " (`id`, `name`, `email_address`, `mp_name`, `mp_constituency`, `mp_party`, `mp_engaged`, `mp_sympathetic`, `schemes`, " +
+                "`industry`, `how_did_you_hear_about_lcag`, `member_of_big_group`, `big_group_username`, `has_been_processed`, `date_created`) " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+
+        Long nextAvailableId = findNextAvailableId("id", enquiryTableName());
+
+        LOGGER.info("Created sql: {}", sql);
+
+        int result = jdbcTemplate.update(
+                sql,
+                nextAvailableId,
+                member.getName(),
+                member.getEmailAddress(),
+                member.getMpName(),
+                member.getMpConstituency(),
+                member.getMpParty(),
+                member.getMpEngaged(),
+                member.getMpSympathetic(),
+                member.getSchemes(),
+                member.getIndustry(),
+                member.getHowDidYouHearAboutLcag(),
+                member.getMemberOfBigGroup() == null ? false : member.getMemberOfBigGroup(),
+                member.getBigGroupUsername(),
+                false,
+                unixTime(Instant.now())
         );
 
         LOGGER.info("Update result: {}", result);

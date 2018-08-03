@@ -156,19 +156,19 @@
                                             <li>Scheme contract OR loan agreement with your name visible</li>
                                         </ul>
                                     <p>Once we have verified your identity we will delete the documents you have sent us.</p>
+                                    <br/>
                                     <div id="inner-message" class="alert alert-info">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <i class="fa fa-info-circle fa-3x"></i>
-                                                </div>
-                                                <div class="col-md-11">
-                                                    <b>Please note</b> if you have a slow internet connection and you are uploading large documents, submitting this form may take a few minutes.<br/>
-                                                    Please do not refresh or navigate away from the page as we may not receive your documents.
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-md-1 col-sm-2">
+                                                <i class="fa fa-info-circle fa-3x"></i>
+                                            </div>
+                                            <div class="col-md-11 col-sm-10">
+                                                <b>Please note</b> if you have a slow internet connection and you are uploading large documents, submitting this form may take a few minutes.
+                                                Please do not refresh or navigate away from the page as we may not receive your documents.
                                             </div>
                                         </div>
                                     </div>
+                                    <br/>
 
                                     <div class="form-group">
                                         <label for="identification">Proof of ID (passport or driving license)</label>
@@ -214,42 +214,45 @@
                     }
                 });
 
-                $.ajax({
-                    url: '/member?token=' + getParameterByName('token'),
-                    method: "GET",
-                    dataType: "json",
-                    complete: function(response, status) {
-                        if (status == "success") {
-                            member = response.responseJSON;
+                if (getParameterByName('token') != null) {
 
-                            console.log("member", response.responseJSON);
+                    $.ajax({
+                        url: '/member?token=' + getParameterByName('token'),
+                        method: "GET",
+                        dataType: "json",
+                        complete: function(response, status) {
+                            if (status == "success") {
+                                member = response.responseJSON;
 
-                            $('#name').val(member.name);
-                            $('#salutation').text(member.name);
-                            $('#emailAddress').val(member.emailAddress);
-                            $('#mpName').val(member.mpName);
-                            $('#mpConstituency').val(member.mpConstituency);
-                            $('#mpParty').val(member.mpParty);
-                            $('#mpEngagedYes').prop("checked", member.mpEngaged);
-                            $('#mpSympatheticYes').prop("checked", member.mpSympathetic);
-                            $('#schemes').val(member.schemes);
-                            $('#industry').val(member.industry);
-                            $('#howDidYouHearAboutLcag').val(member.howDidYouHearAboutLcag);
+                                console.log("member", response.responseJSON);
 
-                            if (member.memberOfBigGroup) {
-                                $("#memberOfBigGroupYes").prop("checked", member.memberOfBigGroup);
-                                showBigGroupUsernameSection();
+                                $('#name').val(member.name);
+                                $('#salutation').text(member.name);
+                                $('#emailAddress').val(member.emailAddress);
+                                $('#mpName').val(member.mpName);
+                                $('#mpConstituency').val(member.mpConstituency);
+                                $('#mpParty').val(member.mpParty);
+                                $('#mpEngagedYes').prop("checked", member.mpEngaged);
+                                $('#mpSympatheticYes').prop("checked", member.mpSympathetic);
+                                $('#schemes').val(member.schemes);
+                                $('#industry').val(member.industry);
+                                $('#howDidYouHearAboutLcag').val(member.howDidYouHearAboutLcag);
+
+                                if (member.memberOfBigGroup) {
+                                    $("#memberOfBigGroupYes").prop("checked", member.memberOfBigGroup);
+                                    showBigGroupUsernameSection();
+                                }
+
+                                if (member.documentUploadError) {
+                                    $("#documentUploadErrorBanner").show();
+                                    showDocumentUploadSection();
+                                }
+
+                                $('#bigGroupUsername').val(member.bigGroupUsername);
                             }
-
-                            if (member.documentUploadError) {
-                                $("#documentUploadErrorBanner").show();
-                                showDocumentUploadSection();
-                            }
-
-                            $('#bigGroupUsername').val(member.bigGroupUsername);
                         }
-                    }
-                });
+                    });
+                }
 
                 $('#token').val(getParameterByName('token'));
 
