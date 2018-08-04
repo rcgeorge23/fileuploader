@@ -320,7 +320,7 @@
                 $("#bigGroupUsernameSection").hide();
                 $("#bigGroupUsername").prop('required', false);
                 console.log("member", member);
-                if (member.hmrcLetterChecked == false && member.identificationChecked == false) {
+                if (member == null || member.hmrcLetterChecked == false && member.identificationChecked == false) {
                     $("#identification").prop('required', true);
                     $("#proofOfSchemeInvolvement").prop('required', true);
                     $("#idDocumentationSection").show();
