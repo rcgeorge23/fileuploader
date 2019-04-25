@@ -28,7 +28,7 @@ class FormSubmissionIT extends GebSpec {
     def "membership form is pre-populated with member data"() {
         given:
             prepopulateMemberDataInDb()
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
 
         when:
             waitFor { at MembershipFormPage }
@@ -50,7 +50,7 @@ class FormSubmissionIT extends GebSpec {
 
     def "membership form cannot be submitted when fields are blank"() {
         given:
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
             waitFor { at MembershipFormPage }
             nameInput.value("")
             emailAddressInput.value("")
@@ -77,7 +77,7 @@ class FormSubmissionIT extends GebSpec {
 
     def "big group username field is displayed when i say i am a member of big group"() {
         given:
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
             waitFor { at MembershipFormPage }
             nameInput.value("")
             emailAddressInput.value("")
@@ -119,7 +119,7 @@ class FormSubmissionIT extends GebSpec {
 
     def "id and scheme doc upload fields are displayed when i say i am not a member of big group"() {
         given:
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
             waitFor { at MembershipFormPage }
             nameInput.value("")
             emailAddressInput.value("")
@@ -163,7 +163,7 @@ class FormSubmissionIT extends GebSpec {
 
     def "can complete membership form as existing big group user"() {
         given:
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
             waitFor { at MembershipFormPage }
             assert documentUploadErrorBanner.displayed == false
 
@@ -201,7 +201,7 @@ class FormSubmissionIT extends GebSpec {
 
     def "can complete membership form with id and proof of scheme docs"() {
         given:
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
             waitFor { at MembershipFormPage }
             File idendificationFile = createFileWithSize(100)
             File proofOfSchemeInvolvementFile = createFileWithSize(100)
@@ -246,7 +246,7 @@ class FormSubmissionIT extends GebSpec {
 
     def "trying to submit zero byte docs results in validation error"() {
         given:
-            go "http://localhost:8383?token=1234_1"
+            go "http://${applicationHost()}:${applicationPort()}?token=1234_1"
             waitFor { at MembershipFormPage }
             File zeroByteFile = createFileWithSize(0)
             assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").size() == 0

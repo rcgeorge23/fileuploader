@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.Thread.sleep;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -32,21 +33,52 @@ import static uk.co.novinet.service.PersistenceUtils.dateFromMyBbRow;
 
 public class TestUtils {
 
-    static final String DB_URL = "jdbc:mysql://127.0.0.1:4306/mybb";
     static final String DB_USERNAME = "user";
     static final String DB_PASSWORD = "p@ssword";
 
     static final String WIX_ENQUIRY_FROM_ADDRESS = "enquiry_form_submission@address.com";
 
-    static final String SMTP_HOST = "localhost";
-    static final int    SMTP_PORT = 3025;
     static final String SMTP_USERNAME = "anything";
     static final String SMTP_PASSWORD = "password";
 
-    static final String IMAP_HOST = "localhost";
-    static final int    IMAP_PORT = 3143;
-
     static final String LCAG_INBOX_EMAIL_ADDRESS = "lcag-testing@lcag.com";
+
+    public static String applicationHost() {
+        return System.getProperty("applicationHost", "localhost");
+    }
+
+    public static String applicationPort() {
+        return System.getProperty("applicationPort", "8282");
+    }
+
+    public static String smtpHost() {
+        return System.getProperty("smtpHost", "localhost");
+    }
+
+    public static String sftpHost() {
+        return System.getProperty("sftpHost", "localhost");
+    }
+
+    public static String sftpPort() {
+        return System.getProperty("sftpPort", "2222");
+    }
+
+    public static String smtpPort() {
+        return System.getProperty("smtpPort", "3025");
+    }
+
+    public static String imapHost() {
+        return System.getProperty("imapHost", "localhost");
+    }
+
+    public static String imapPort() {
+        return System.getProperty("imapPort", "3143");
+    }
+
+    public static String dbUrl() {
+        return System.getProperty("dbUrl", "jdbc:mysql://127.0.0.1:4306/mybb");
+    }
+
 
     static void setupDatabaseSchema() throws Exception {
         deleteAllMessages(LCAG_INBOX_EMAIL_ADDRESS);
@@ -86,7 +118,7 @@ public class TestUtils {
         email.setText(messageBody);
         email.setSubject("Subject");
 
-        new Mailer(SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, TransportStrategy.SMTP_PLAIN).sendMail(email);
+        new Mailer(smtpHost(), parseInt(smtpHost()), SMTP_USERNAME, SMTP_PASSWORD, TransportStrategy.SMTP_PLAIN).sendMail(email);
     }
 
     static void insertUser(int id, String username, String emailAddress, String name, int group, String token) {
@@ -102,7 +134,7 @@ public class TestUtils {
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            connection = DriverManager.getConnection(dbUrl(), DB_USERNAME, DB_PASSWORD);
             statement = connection.createStatement();
             statement.executeUpdate(sql);
         } catch (Exception e) {
@@ -122,7 +154,7 @@ public class TestUtils {
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            connection = DriverManager.getConnection(dbUrl(), DB_USERNAME, DB_PASSWORD);
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from i7b0_users");
             List<User> users = new ArrayList<>();
@@ -164,7 +196,7 @@ public class TestUtils {
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            connection = DriverManager.getConnection(dbUrl(), DB_USERNAME, DB_PASSWORD);
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from i7b0_enquiry");
             List<Enquiry> enquiries = new ArrayList<>();
@@ -216,7 +248,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = (IMAPStore) session.getStore("imap");
-            store.connect(IMAP_HOST, IMAP_PORT, emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
             folder = store.getFolder(folderName);
             if (!folder.exists()) {
                 return Collections.emptyList();
@@ -265,7 +297,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = session.getStore("imap");
-            store.connect(IMAP_HOST, IMAP_PORT, emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
 
             IMAPFolder folder = (IMAPFolder) store.getFolder(folderName);
 
@@ -293,7 +325,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = session.getStore("imap");
-            store.connect(IMAP_HOST, IMAP_PORT, emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
 
             IMAPFolder folder = (IMAPFolder) store.getFolder(folderName);
 
@@ -324,7 +356,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = session.getStore("imap");
-            store.connect(IMAP_HOST, IMAP_PORT, emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
 
             IMAPFolder folder = (IMAPFolder) store.getFolder("Inbox");
             folder.open(Folder.READ_WRITE);

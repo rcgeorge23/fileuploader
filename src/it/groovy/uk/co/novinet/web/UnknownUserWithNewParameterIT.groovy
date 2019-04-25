@@ -28,7 +28,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
 
     def "empty membership form is displayed when n=t parameter is passed on query string"() {
         given:
-            go "http://localhost:8383?n=t"
+            go "http://${applicationHost()}:${applicationPort()}?n=t"
 
         when:
             waitFor { at MembershipFormPage }
@@ -49,7 +49,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
 
     def "when t=f, we go to the not found page"() {
         given:
-        go "http://localhost:8383?n=f"
+        go "http://${applicationHost()}:${applicationPort()}?n=f"
 
         when:
         waitFor { at NotFoundPage }
@@ -60,7 +60,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
 
     def "can complete membership form with id and proof of scheme docs"() {
         given:
-        go "http://localhost:8383?n=t"
+        go "http://${applicationHost()}:${applicationPort()}?n=t"
         waitFor { at MembershipFormPage }
         File idendificationFile = createFileWithSize(100)
         File proofOfSchemeInvolvementFile = createFileWithSize(100)
@@ -107,7 +107,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
 
     def "can complete membership form with big group username"() {
         given:
-        go "http://localhost:8383?n=t"
+        go "http://${applicationHost()}:${applicationPort()}?n=t"
         waitFor { at MembershipFormPage }
 
         when:

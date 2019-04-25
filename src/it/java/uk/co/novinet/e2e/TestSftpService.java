@@ -15,14 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import static java.lang.Integer.parseInt;
+import static uk.co.novinet.e2e.TestUtils.sftpHost;
+import static uk.co.novinet.e2e.TestUtils.sftpPort;
+
 public class TestSftpService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestSftpService.class);
 
     private String sftpUsername = "user";
     private String sftpPassword = "password";
-    private String sftpHost = "localhost";
-    private Integer sftpPort = 2222;
     private String sftpRootDirectory = "/upload";
 
     public void removeAllDocsForEmailAddress(String emailAddress) {
@@ -31,7 +33,7 @@ public class TestSftpService {
         ChannelSftp sftpChannel = null;
 
         try {
-            session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
+            session = jsch.getSession(sftpUsername, sftpHost(), parseInt(sftpPort()));
             session.setPassword(sftpPassword);
 
             java.util.Properties config = new java.util.Properties();
@@ -100,7 +102,7 @@ public class TestSftpService {
         List<SftpDocument> sftpDocuments = new ArrayList<>();
 
         try {
-            session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
+            session = jsch.getSession(sftpUsername, sftpHost(), parseInt(sftpPort()));
             session.setPassword(sftpPassword);
 
             java.util.Properties config = new java.util.Properties();
@@ -155,7 +157,7 @@ public class TestSftpService {
         ChannelSftp sftpChannel = null;
 
         try {
-            session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
+            session = jsch.getSession(sftpUsername, sftpHost(), parseInt(sftpPort()));
             session.setPassword(sftpPassword);
 
             java.util.Properties config = new java.util.Properties();
