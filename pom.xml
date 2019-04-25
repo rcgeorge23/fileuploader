@@ -12,6 +12,13 @@
         <docker.image.prefix>dockernovinet</docker.image.prefix>
     </properties>
 
+    <scm>
+        <url>https://github.com/rcgeorge23/fileuploader</url>
+        <connection>scm:git:git@github.com:rcgeorge23/fileuploader.git</connection>
+        <developerConnection>scm:git:git@github.com:rcgeorge23/fileuploader.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <!--docker login &#45;&#45;username=dockernovinet-->
     <!-- mvn clean package install dockerfile:build-->
 
