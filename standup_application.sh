@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+APPLICATION_HOST=${1:-"localhost"}
+APPLICATION_PORT=${2:-"8282"}
+
 echo "Standing up fileuploader application"
 docker run -d \
     --network lcag-automation-network \
@@ -21,11 +24,11 @@ docker run -d \
 	-e "BCC_RECIPIENTS=test@bcc.com" \
 	-e "EMAIL_FROM_NAME=LCAG" \
 	-e "EMAIL_SUBJECT=Your LCAG Membership Application" \
-	-e "VIRTUAL_PORT=8383" \
-	-e "SERVER_PORT=8383" \
-	--name fileuploader \
-    -p 8383:8383 \
+	-e "VIRTUAL_PORT=8282" \
+	-e "SERVER_PORT=8282" \
+	--name lcag-membership-form \
+    -p 8282:8282 \
     -t dockernovinet/fileuploader
 
-echo "Waiting for application status url to respond with 200"
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8383)" != "200" ]]; do sleep 5; done
+echo "Waiting for application status url to respond with 200. Status url: http://${APPLICATION_HOST}:${APPLICATION_PORT}/status"
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${APPLICATION_HOST}:${APPLICATION_PORT}/status)" != "200" ]]; do sleep 5; done

@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-./standup_supporting_containers.sh
-./standup_application.sh
+APPLICATION_HOST=${1:-"localhost"}
+APPLICATION_PORT=${2:-"8282"}
 
-echo "Waiting for application status url to respond with 200"
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8383)" != "200" ]]; do sleep 5; done
+./standup_supporting_containers.sh
+
+./standup_application.sh ${APPLICATION_HOST} ${APPLICATION_PORT}
+
+echo "Waiting for application status url to respond with 200. Status url: http://${APPLICATION_HOST}:${DASHBOARD_PORT}/status"
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${APPLICATION_HOST}:${APPLICATION_PORT}/status)" != "200" ]]; do sleep 5; done
