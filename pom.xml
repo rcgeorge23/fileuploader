@@ -10,6 +10,8 @@
 
     <properties>
         <docker.image.prefix>dockernovinet</docker.image.prefix>
+        <applicationHost>localhost</applicationHost>
+        <applicationPort>8282</applicationPort>
     </properties>
 
     <scm>
@@ -150,7 +152,7 @@
                         </goals>
                         <configuration>
                             <executable>bash</executable>
-                            <commandlineArgs>standup_all.sh</commandlineArgs>
+                            <commandlineArgs>standup_all.sh ${applicationHost} ${applicationPort}</commandlineArgs>
                         </configuration>
                     </execution>
                     <execution>
