@@ -118,7 +118,7 @@ public class TestUtils {
         email.setText(messageBody);
         email.setSubject("Subject");
 
-        new Mailer(smtpHost(), parseInt(smtpHost()), SMTP_USERNAME, SMTP_PASSWORD, TransportStrategy.SMTP_PLAIN).sendMail(email);
+        new Mailer(smtpHost(), parseInt(smtpPort()), SMTP_USERNAME, SMTP_PASSWORD, TransportStrategy.SMTP_PLAIN).sendMail(email);
     }
 
     static void insertUser(int id, String username, String emailAddress, String name, int group, String token) {
@@ -248,7 +248,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = (IMAPStore) session.getStore("imap");
-            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapPort()), emailAddress, "password");
             folder = store.getFolder(folderName);
             if (!folder.exists()) {
                 return Collections.emptyList();
@@ -297,7 +297,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = session.getStore("imap");
-            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapPort()), emailAddress, "password");
 
             IMAPFolder folder = (IMAPFolder) store.getFolder(folderName);
 
@@ -325,7 +325,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = session.getStore("imap");
-            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapPort()), emailAddress, "password");
 
             IMAPFolder folder = (IMAPFolder) store.getFolder(folderName);
 
@@ -356,7 +356,7 @@ public class TestUtils {
         try {
             Session session = Session.getDefaultInstance(new Properties());
             store = session.getStore("imap");
-            store.connect(imapHost(), parseInt(imapHost()), emailAddress, "password");
+            store.connect(imapHost(), parseInt(imapPort()), emailAddress, "password");
 
             IMAPFolder folder = (IMAPFolder) store.getFolder("Inbox");
             folder.open(Folder.READ_WRITE);

@@ -99,7 +99,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
         assert enquiry.memberOfBigGroup == false
         assert enquiry.bigGroupUsername == ""
         assert enquiry.hasBeenProcessed == false
-        assert enquiry.dateCreated.isAfter(Instant.now().minusMillis(1000))
+        assert enquiry.dateCreated.isAfter(Instant.now().minusMillis(10000))
         assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").size() == 2
         assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").get(0).getSize() > 0L
         assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").get(1).getSize() > 0L
@@ -141,7 +141,7 @@ class UnknownUserWithNewParameterIT extends GebSpec {
         assert enquiry.memberOfBigGroup == true
         assert enquiry.bigGroupUsername == bigGroupUsername
         assert enquiry.hasBeenProcessed == false
-        assert enquiry.dateCreated.isAfter(Instant.now().minusMillis(1000))
+        assert enquiry.dateCreated.isAfter(Instant.now().minusMillis(10000))
         assert new TestSftpService().getAllDocumentsForEmailAddress("test@test.com").size() == 0
     }
 
