@@ -4,7 +4,7 @@
 
     <groupId>uk.co.novinet</groupId>
     <artifactId>fileuploader</artifactId>
-    <version>1.8</version>
+    <version>1.9-SNAPSHOT</version>
 
     <properties>
         <docker.image.prefix>dockernovinet</docker.image.prefix>
@@ -16,7 +16,7 @@
         <url>https://github.com/rcgeorge23/fileuploader</url>
         <connection>scm:git:git@github.com:rcgeorge23/fileuploader.git</connection>
         <developerConnection>scm:git:git@github.com:rcgeorge23/fileuploader.git</developerConnection>
-        <tag>fileuploader-1.8</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <!--docker login &#45;&#45;username=dockernovinet-->
